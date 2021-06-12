@@ -38,21 +38,62 @@
   <div class="container-fluid bg-dark">
       <br>
       <div class="row">
-          <div class="col-sm-12 col-md-8">
+          <div class="col-sm-12 col-md-6">
             <div class="card bg-light">
                 <div class="card-body" >
                   <h3 class="card-title">Featured Mars Image</h3>
                   <br>    
-                  <img src="https://spaceimages-mars.com/image/featured/mars1.jpg" class="card-img-top" alt="Featured">
+                  <img src="{{img1_url[0]['image1_url']}}" class="card-img-top" alt="Featured">
                 </div>
             </div> 
           </div> 
           
-          <div class="col-sm-12 col-md-4">
+          <div class="col-sm-12 col-md-6">
             <br>
             <div class="card bg-light">
               <div class="card-body">
-                <h5 class="card-title">Mars Facts</h5>                
+                <h3 class="card-title">Mars Facts</h3>   
+              <table border="1"class="table table-striped">
+              <thead>
+                <tr style="text-align: right;">
+                  <th>Mars - Earth Comparison</th>
+                  <th>Mars</th>
+                  <th>Earth</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Diameter:</td>
+                  <td>{{mars_diameter[0]['Mars']}}</td>
+                  <td>{{earth_diameter[0]['Earth']}}</td>
+                </tr>
+                <tr>
+                  <td>Mass:</td>
+                  <td>{{mars_mass[1]['Mars']}}</td>
+                  <td>{{earth_mass[1]['Earth']}}</td>
+                </tr>
+                <tr>
+                  <td>Moons:</td>
+                  <td>{{mars_moons[2]['Mars']}}</td>
+                  <td>{{earth_moons[2]['Earth']}}</td>
+                </tr>
+                <tr>
+                  <td>Distance from Sun:</td>
+                  <td>{{mars_distance[3]['Mars']}}</td>
+                  <td>{{earth_distance[3]['Earth']}}</td>
+                </tr>
+                <tr>
+                  <td>Length of Year:</td>
+                  <td>{{mars_year[4]['Mars']}}</td>
+                  <td>{{earth_year[4]['Earth']}}</td>
+                </tr>
+                <tr>
+                  <td>Temperature:</td>
+                  <td>{{mars_temp[5]['Mars']}}</td>
+                  <td>{{earth_temp[5]['Earth']}}</td>
+                </tr>
+              </tbody>
+            </table>             
               </div>
             </div>
           </div>
@@ -60,23 +101,23 @@
   </div>
 
   <br>
-  <h2>Mars Hemispheres</h2>
+  <h2 class="text-center"> Mars Hemispheres </h2>
 
   <div class="container-fluid bg-dark">
     <br>
     <div class="row">
         <div class="col-sm-6 col-md-3">
-          <div class="card bg-light">
+          <div class="card text-primary border-primary" style="max-width: 20rem;">
               <div class="card-body" >
                 <img src= "{{img2_url[0]['img2_url']}}" >
-                <h3 class="card-title">{{title_image[0]["title_image"]}}</h3>
+                <h3 class="card-title ">{{title_image[0]["title_image"]}}</h3>
                 <br>    
               </div>
           </div> 
         </div> 
 
         <div class="col-sm-6 col-md-3">
-          <div class="card bg-light">
+          <div class="card text-primary border-primary" style="max-width: 20rem;">
               <div class="card-body" >
                 <img src= "{{img2_url[1]['img2_url']}}">
                 <h3 class="card-title">{{title_image[1]["title_image"]}}</h3>
@@ -87,7 +128,7 @@
 
         <div class="col-sm-6 col-md-3">
           <div class="card bg-light">
-              <div class="card-body" >
+              <div class="card text-primary border-primary" style="max-width: 20rem;" >
                 <img src= "{{img2_url[2]['img2_url']}}"   >
                 <h3 class="card-title">{{title_image[2]["title_image"]}}</h3>
                 <br>    
@@ -96,7 +137,7 @@
         </div> 
 
         <div class="col-sm-6 col-md-3">
-          <div class="card bg-light">
+          <div class="card text-primary border-primary" style="max-width: 20rem;">
               <div class="card-body" >
                 <img src= "{{img2_url[3]['img2_url']}}"   >
                 <h3 class="card-title">{{title_image[3]["title_image"]}}</h3>
