@@ -1,11 +1,3 @@
-# To add a new cell, type '# %%'
-# To add a new markdown cell, type '# %% [markdown]'
-# %% [markdown]
-# # NASA Mars News
-# 
-# 
-# %% [markdown]
-# - Scrape the Mars News Site and collect the latest News Title and Paragraph Text. Assign the text to variables that you can reference later.
 
 # %%
 # Dependencies
@@ -17,17 +9,19 @@ from splinter import Browser
 from webdriver_manager.chrome import ChromeDriverManager
 
 def scrape_info():
-# %%
-# Initialize PyMongo to work with MongoDBs
+    # %%
+    # Initialize PyMongo to work with MongoDBs
     conn = 'mongodb://127.0.0.1:27017'
     client = pymongo.MongoClient(conn)
 
 
     # %%
-    # Define database and collection
+    # Define database
     db = client.mars_db
 
-    # Drops collection if available to remove duplicates
+
+    # %%
+    # Drops collection if available to remove duplicates, insert collection
     db.news.drop()
     collection = db.news
 
@@ -48,6 +42,7 @@ def scrape_info():
     html = browser.html
     soup = bs(html, 'html.parser')
 
+    #find all division and class with news    
     results = soup.find_all('div', class_="list_text")
 
     for result in results:
@@ -88,10 +83,7 @@ def scrape_info():
     # ## JPL Mars Space Images - Featured Image
 
     # %%
-    # Define database and collection
-    db = client.mars_db
-
-    # Drops collection if available to remove duplicates
+    # define tthe collection and Drops collection if available to remove duplicates
     db.images1.drop()
     collection = db.images1
 
@@ -105,6 +97,7 @@ def scrape_info():
 
 
     # %%
+    #use browser and besutiful soup to read the website   
     html = browser.html
     soup = bs(html, 'html.parser')
 
@@ -141,6 +134,12 @@ def scrape_info():
     # ## Mars Facts
 
     # %%
+    # define the collection and Drops collection if available to remove duplicates
+    db.facts.drop()
+    collection = db.facts
+
+
+    # %%
     #Define Mars Facts webpage
     url="https://galaxyfacts-mars.com/"
 
@@ -165,6 +164,17 @@ def scrape_info():
 
 
     # %%
+    #convert the dataframe into a dictionary with the rows as keys
+    data=df.to_dict('records')
+    data
+
+
+    # %%
+    #insert the data in the collection
+    collection.insert_many(data)
+
+
+    # %%
     #Convert the data to a HTML table string
     html_table = df.to_html('facts.html',index=False)
     html_table
@@ -173,10 +183,7 @@ def scrape_info():
     # ## Mars Hemispheres
 
     # %%
-    # Define database and collection
-    db = client.mars_db
-
-    # Drops collection if available to remove duplicates
+    # define the collection adn Drops collection if available to remove duplicates
     db.images2.drop()
     collection = db.images2
 
@@ -189,53 +196,64 @@ def scrape_info():
     # %%
     url = 'https://marshemispheres.com/'
     browser.visit(url)
+    #browser.links.find_by_partial_text('Hemisphere Enhanced').click()
 
 
     # %%
+    #use browser and besutiful soup to read the website 
     html = browser.html
     soup = bs(html, 'html.parser')
+    products1 = soup.find_all('div', class_='item')
 
-    products = soup.find_all('div', class_='item')
+    #collect all the routes of hemispheres images
 
-    url_list = []
+    url_list=[]
 
-    for product in products:
-        img_url = product.find('a')['href']
-        url_list.append(img_url)
-
+    for product in products1:
+        link = product.find('a')["href"]
+        url_list.append(link)
+        
     image_url_list = ['https://marshemispheres.com/' + url for url in url_list]
-
-    image_url_list
+    image_url_list 
 
 
     # %%
-    products2 = soup.find_all('div', class_='description')
-
+    #retrieve all the links of the full images and titles of hemispheres images
+    img2_url=[]
     title_list = []
 
-    for product in products2:
-        title = product.find('h3').text
-        title_list.append(title)
-        
-    title_list
+    for url in image_url_list:
+        html = browser.html
+        soup = bs(html, 'html.parser')
+        browser.visit(url)
+        img_url = soup.find_all('div', id="wide-image", class_="wide-image-wrapper")
+        for img in img_url:
+            img2= img.find('img', class_='wide-image')['src']
+            img2_url.append(img2)
+        html = browser.html
+        soup = bs(html, 'html.parser')
+        browser.visit(url)
+        img_title = soup.find_all('div', class_="cover")
+        for title in img_title:
+            title= title.find('h2', class_='title').text
+            title_list.append(title)
+                
+    img2_links= ['https://marshemispheres.com/' + url for url in img2_url]
+    img2_links
 
 
     # %%
-    titles_and_urls = zip(title_list, image_url_list)
-
-    result_list = dict(titles_and_urls)
-        
-    print(result_list)
+    title_list
 
 
     # %%
     # Dictionary to be inserted into MongoDB
 
     hemisphere_image_urls =[
-        {"title_image": "Cerberus Hemisphere Enhanced", "img2_url": "https://marshemispheres.com/cerberus.html"},
-        {"title_image": "Schiaparelli Hemisphere Enhanced", "img2_url": "https://marshemispheres.com/schiaparelli.html"},
-        {"title_image": "Syrtis Major Hemisphere Enhanced", "img2_url": "https://marshemispheres.com/syrtis.html"},
-        {"title_image": "Valles Marineris Hemisphere Enhanced", "img2_url": "https://marshemispheres.com/valles.html"}]
+        {"title_image": "Cerberus Hemisphere Enhanced", "img2_url": "https://marshemispheres.com/images/39d3266553462198bd2fbc4d18fbed17_cerberus_enhanced.tif_thumb.png"},
+        {"title_image": "Schiaparelli Hemisphere Enhanced", "img2_url": "https://marshemispheres.com/images/08eac6e22c07fb1fe72223a79252de20_schiaparelli_enhanced.tif_thumb.png"},
+        {"title_image": "Syrtis Major Hemisphere Enhanced", "img2_url": "https://marshemispheres.com/images/55a0a1e2796313fdeafb17c35925e8ac_syrtis_major_enhanced.tif_thumb.png"},
+        {"title_image": "Valles Marineris Hemisphere Enhanced", "img2_url": "https://marshemispheres.com/images/4e59980c1c57f89c680c0e1ccabbeff1_valles_marineris_enhanced.tif_thumb.png"}]
 
     # Insert dictionary into MongoDB as a document
     collection.insert_many(hemisphere_image_urls)
@@ -253,6 +271,10 @@ def scrape_info():
 
 
     # %%
-    return mars_data
 
+
+
+    # %%
+
+    return hemisphere_image_urls
 
