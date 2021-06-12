@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Mission to Mars</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+
+
+<body>
+  <div class="container-fluid">
+    <div class="jumbotron text-center">
+      <h1>Mission to Mars</h1>
+      <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Scrape New Data</a></p>
+    </div>
+  </div>  
+  <br>
+
+  <div class="container-fluid bg-dark">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card bg-light">
+          <div class="card-body" >
+              <h2 class="card-title">Latest Mars News</h2>
+                <h3 class="card-text">{{news_title["news_title"]}}</h3>
+                <p> {{description["description"]}}</p>
+          </div>
+        </div> 
+      </div>     
+    </div> 
+  </div>     
+
+  <br>
+  <div class="container-fluid bg-dark">
+      <br>
+      <div class="row">
+          <div class="col-sm-12 col-md-8">
+            <div class="card bg-light">
+                <div class="card-body" >
+                  <h3 class="card-title">Featured Mars Image</h3>
+                  <br>    
+                  <img src="https://spaceimages-mars.com/image/featured/mars1.jpg" class="card-img-top" alt="Featured">
+                </div>
+            </div> 
+          </div> 
+          
+          <div class="col-sm-12 col-md-4">
+            <br>
+            <div class="card bg-light">
+              <div class="card-body">
+                <h5 class="card-title">Mars Facts</h5>                
+              </div>
+            </div>
+          </div>
+      </div>
+  </div>
+
+  <br>
+  <h2>Mars Hemispheres</h2>
+
+  <div class="container-fluid bg-dark">
+    <br>
+    <div class="row">
+        <div class="col-sm-6 col-md-3">
+          <div class="card bg-light">
+              <div class="card-body" >
+                <img src= "{{img2_url[0]['img2_url']}}" >
+                <h3 class="card-title">{{title_image[0]["title_image"]}}</h3>
+                <br>    
+              </div>
+          </div> 
+        </div> 
+
+        <div class="col-sm-6 col-md-3">
+          <div class="card bg-light">
+              <div class="card-body" >
+                <img src= "{{img2_url[1]['img2_url']}}">
+                <h3 class="card-title">{{title_image[1]["title_image"]}}</h3>
+                <br>    
+              </div>
+          </div> 
+        </div> 
+
+        <div class="col-sm-6 col-md-3">
+          <div class="card bg-light">
+              <div class="card-body" >
+                <img src= "{{img2_url[2]['img2_url']}}"   >
+                <h3 class="card-title">{{title_image[2]["title_image"]}}</h3>
+                <br>    
+              </div>
+          </div> 
+        </div> 
+
+        <div class="col-sm-6 col-md-3">
+          <div class="card bg-light">
+              <div class="card-body" >
+                <img src= "{{img2_url[3]['img2_url']}}"   >
+                <h3 class="card-title">{{title_image[3]["title_image"]}}</h3>
+                <br>    
+              </div>
+          </div> 
+        </div> 
+       
+    </div>
+</div>
+
+
+</body>
+
+</html>
